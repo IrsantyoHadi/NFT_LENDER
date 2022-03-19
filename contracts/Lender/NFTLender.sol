@@ -14,7 +14,7 @@ contract ERC721Lender {
     );
 
     struct ERC721ForLend {
-        uint256 durationHours;
+        uint256 lendDuration;
         uint256 initialWorth;
         uint256 earningGoal;
         uint256 borrowedAtTimestamp;
@@ -219,7 +219,6 @@ contract ERC721Lender {
             0,
             0,
             address(0),
-            address(0),
             false,
             0
         ); // reset details
@@ -232,10 +231,10 @@ contract ERC721Lender {
         uint256 _borrowedAtTimestamp = NFTForLend[_NFTAddress][_tokenId][
             msg.sender
         ].borrowedAtTimestamp;
-        uint256 _durationHours = NFTForLend[_NFTAddress][_tokenId][msg.sender]
-            .durationHours;
+        uint256 _lenderDuration = NFTForLend[_NFTAddress][_tokenId][msg.sender]
+            .lendDuration;
         require(
-            isDurationExpired(_borrowedAtTimestamp, _durationHours),
+            isDurationExpired(_borrowedAtTimestamp, _lenderDuration),
             "Claim: Cannot claim before lending expired"
         );
 
@@ -273,10 +272,10 @@ contract ERC721Lender {
 
     function isDurationExpired(
         uint256 _borrowedAtTimestamp,
-        uint256 _durationHours
+        uint256 _lendDuration
     ) public view returns (bool) {
         uint256 secondsPassed = block.timestamp - _borrowedAtTimestamp;
-        uint256 secondsDuration = _durationHours * 60 * 60;
+        uint256 secondsDuration = _lendDuration * 60 * 60;
         return secondsDuration > secondsPassed;
     }
 
