@@ -6,6 +6,12 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 contract ERC721Lender {
     address paymentTokenAddress;
+    address admin;
+
+    constructor(address _paymentTokenAddress) {
+        paymentTokenAddress = _paymentTokenAddress;
+        admin = msg.sender;
+    }
 
     event ERC721LendUpdated(
         address lenderAddress,
@@ -37,6 +43,12 @@ contract ERC721Lender {
 
     mapping(address => ERC721TokenInit[]) allBorrowedNFT;
     mapping(address => uint256) lenderBalance;
+
+    function setPaymentTokenAddress(address _paymentTokenAddress) public {
+        require(admin == msg.sender, "Admin Only");
+
+        paymentTokenAddress = _paymentTokenAddress;
+    }
 
     function listNFT(
         address _NFTAddress,
