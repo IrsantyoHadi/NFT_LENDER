@@ -5,8 +5,8 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 contract ERC721Lender {
-    address paymentTokenAddress;
-    address admin;
+    address public paymentTokenAddress;
+    address public admin;
 
     constructor(address _paymentTokenAddress) {
         paymentTokenAddress = _paymentTokenAddress;
