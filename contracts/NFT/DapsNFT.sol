@@ -29,10 +29,26 @@ contract DapsNFT is ERC721A, Ownable, ReentrancyGuard, Signed {
 
     //SETUP ONLY OWNER
     function withdraw() external payable onlyOwner {
-        (bool success, ) = payable(msg.sender).call{
+        (bool man1, ) = payable(0x00000000000000000000000).call{
+            value: (address(this).balance * 20) / 100
+        }("");
+        require(man1);
+        (bool man2, ) = payable(0x00000000000000000000000).call{
+            value: (address(this).balance * 10) / 100
+        }("");
+        require(man2);
+        (bool man3, ) = payable(0x00000000000000000000000).call{
+            value: (address(this).balance * 30) / 100
+        }("");
+        require(man3);
+        (bool man4, ) = payable(0x00000000000000000000000).call{
+            value: (address(this).balance * 30) / 100
+        }("");
+        require(man4);
+        (bool man5, ) = payable(0x00000000000000000000000).call{
             value: address(this).balance
         }("");
-        require(success);
+        require(man5);
     }
 
     function flipPresale() external onlyOwner {
